@@ -153,17 +153,17 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            max-width: 800px;
+            max-width: 700px;
             margin: 30px auto;
         }
 
         .category-modal {
             aspect-ratio: 1;
-            padding: 40px 20px;
+            padding: 30px 15px;
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
             border: 3px solid rgba(255, 215, 0, 0.3);
-            border-radius: 25px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -183,20 +183,20 @@
         }
 
         .category-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
+            font-size: 3.5em;
+            margin-bottom: 15px;
             filter: drop-shadow(0 4px 8px rgba(255, 215, 0, 0.3));
         }
 
         .category-modal h3 {
             color: #FFD700;
-            font-size: 1.5em;
-            margin-bottom: 10px;
+            font-size: 1.4em;
+            margin-bottom: 8px;
         }
 
         .category-modal p {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 0.95em;
+            font-size: 0.85em;
             line-height: 1.4;
         }
 
@@ -212,91 +212,126 @@
 
         .apps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
             margin-top: 30px;
         }
 
         .app-card {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
+            border-radius: 15px;
+            padding: 15px 10px;
             border: 2px solid rgba(255, 215, 0, 0.3);
             transition: all 0.3s ease;
             cursor: pointer;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
 
         .app-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             border-color: #FFD700;
             box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
         }
 
+        .app-card.active {
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
         .app-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: linear-gradient(135deg, #FFD700, #FFA500);
-            border-radius: 15px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin-bottom: 15px;
+            font-size: 24px;
+            margin: 0 auto 10px;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .app-card.active .app-icon {
+            transform: scale(1.1);
         }
 
         .app-card h3 {
             color: #FFD700;
-            margin-bottom: 10px;
-            font-size: 1.3em;
+            margin-bottom: 0;
+            font-size: 0.85em;
+            line-height: 1.2;
+            text-align: center;
         }
 
-        .app-card p {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            font-size: 0.95em;
+        .app-description {
+            display: none;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
+            font-size: 0.75em;
+            text-align: center;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .app-card.active .app-description {
+            display: block;
+        }
+
+        .click-instruction {
+            display: none;
+            color: #FFD700;
+            font-size: 0.7em;
+            text-align: center;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .app-card.active .click-instruction {
+            display: block;
+            animation: pulse 1.5s infinite;
         }
 
         .app-link {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #8B00FF, #5d00a6);
-            color: #FFD700;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .app-link:hover {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #2d004d;
-            transform: translateX(5px);
-        }
-
-        .app-link.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: rgba(139, 0, 255, 0.3);
-        }
-
-        .app-link.disabled:hover {
-            transform: none;
+            display: none;
         }
 
         .coming-soon {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 5px 15px;
+            display: block;
+            margin-top: 8px;
+            padding: 3px 8px;
             background: rgba(255, 215, 0, 0.2);
             color: #FFD700;
-            border-radius: 5px;
-            font-size: 0.85em;
+            border-radius: 4px;
+            font-size: 0.65em;
             font-weight: bold;
+            text-align: center;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .back-btn {
@@ -407,31 +442,89 @@
 
         @media (max-width: 768px) {
             h1 {
-                font-size: 1.8em;
+                font-size: 1.5em;
             }
 
-            .apps-grid {
-                grid-template-columns: 1fr;
+            .welcome-text {
+                padding: 20px;
+            }
+
+            .welcome-text p {
+                font-size: 0.95em;
+            }
+
+            .dashboard-header h2 {
+                font-size: 1.5em;
             }
 
             .category-buttons {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                max-width: 100%;
             }
 
             .category-modal {
-                aspect-ratio: auto;
-                padding: 30px 20px;
+                aspect-ratio: 1;
+                padding: 20px 10px;
             }
 
             .category-icon {
-                font-size: 3em;
+                font-size: 2.5em;
+                margin-bottom: 10px;
+            }
+
+            .category-modal h3 {
+                font-size: 1em;
+            }
+
+            .category-modal p {
+                font-size: 0.7em;
+            }
+
+            /* CRITICAL: 3 columns on mobile */
+            .apps-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .app-card {
+                padding: 12px 8px;
+            }
+
+            .app-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 22px;
+            }
+
+            .app-card h3 {
+                font-size: 0.75em;
+            }
+
+            .app-description {
+                font-size: 0.7em;
+                padding: 8px;
             }
 
             .portal-return-btn {
                 bottom: 10px;
                 right: 10px;
-                padding: 12px 20px;
-                font-size: 0.95em;
+                padding: 10px 15px;
+                font-size: 0.85em;
+            }
+
+            .back-btn {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 0.85em;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .apps-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
             }
         }
     </style>
@@ -494,39 +587,39 @@
                 <p style="text-align: center; margin-bottom: 30px; color: rgba(255,255,255,0.8);">Operations, Integration, Compliance & Security</p>
                 
                 <div class="apps-grid">
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://magero1985.github.io/Tau-Africa/')">
                         <div class="app-icon">🏠</div>
                         <h3>TAU Africa Main App</h3>
-                        <p>Registration, Membership, Activities, Tasks, Community, Values and core ecosystem management</p>
-                        <a href="https://magero1985.github.io/Tau-Africa/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">Registration, Membership, Activities, Tasks, Community, Values and core ecosystem management</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://magero1985.github.io/Kabiru-Mining-Portal-/')">
                         <div class="app-icon">⛏️</div>
                         <h3>Kabiru Mining Portal</h3>
-                        <p>iKb Mining Portal, iKbp Earnings, Wallet Management, iKb Account Management, Swap Services, Link to Ecosystem Apps</p>
-                        <a href="https://magero1985.github.io/Kabiru-Mining-Portal-/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">iKb Mining Portal, iKbp Earnings, Wallet Management, iKb Account Management, Swap Services, Link to Ecosystem Apps</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://magero1985.github.io/Tau-marketing-App/')">
                         <div class="app-icon">🌍</div>
                         <h3>Global Marketplace</h3>
-                        <p>Global Market, Buy, Sell, Account Management, Admin Controls, Products, Services, Apps Integration</p>
-                        <a href="https://magero1985.github.io/Tau-marketing-App/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">Global Market, Buy, Sell, Account Management, Admin Controls, Products, Services, Apps Integration</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://magero1985.github.io/Tau-Africa-Accounting/')">
                         <div class="app-icon">💰</div>
                         <h3>Accounting Database</h3>
-                        <p>Comprehensive Accounting System - Auffi, Valenta, Par Sirai, IEL, Financial Automation, Recording Master, Statement Emailing</p>
-                        <a href="https://magero1985.github.io/Tau-Africa-Accounting/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">Comprehensive Accounting System - Auffi, Valenta, Par Sirai, IEL, Financial Automation, Recording Master, Statement Emailing</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://magero1985.github.io/oloo_app/')">
                         <div class="app-icon">💬</div>
                         <h3>Oloo Messenger</h3>
-                        <p>Messenger Services, Chats, Groups, Forums, and Community Communication Platform</p>
-                        <a href="https://magero1985.github.io/oloo_app/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">Messenger Services, Chats, Groups, Forums, and Community Communication Platform</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
                 </div>
             </div>
@@ -537,69 +630,67 @@
                 <p style="text-align: center; margin-bottom: 30px; color: rgba(255,255,255,0.8);">Resource Generation, Social Interaction, Job Creation & Growth</p>
                 
                 <div class="apps-grid">
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://magero1985.github.io/Reach-out-Ema/')">
                         <div class="app-icon">🛍️</div>
                         <h3>Merchandise App</h3>
-                        <p>Product Supplies: Industrial Supplies, Safety & Promotional Equipment, Uniforms, and More</p>
-                        <a href="https://magero1985.github.io/Reach-out-Ema/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">Product Supplies: Industrial Supplies, Safety & Promotional Equipment, Uniforms, and More</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://grouptauafrica-spec.github.io/Diagnosis-App/')">
                         <div class="app-icon">🏥</div>
                         <h3>Health Diagnosis App</h3>
-                        <p>Self-care Diagnosis, Doctors, Agents, Services, Homeopathic Products, Treatments, Referral Earnings</p>
-                        <a href="https://grouptauafrica-spec.github.io/Diagnosis-App/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">Self-care Diagnosis, Doctors, Agents, Services, Homeopathic Products, Treatments, Referral Earnings</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://grouptauafrica-spec.github.io/Membership-document-/')">
                         <div class="app-icon">📘</div>
                         <h3>TAU Blueprint</h3>
-                        <p>TAU Africa Foundation Blueprint, Vision, Objectives, Funding, Membership, Benefits, Responsibilities</p>
-                        <a href="https://grouptauafrica-spec.github.io/Membership-document-/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">TAU Africa Foundation Blueprint, Vision, Objectives, Funding, Membership, Benefits, Responsibilities</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://grouptauafrica-spec.github.io/Fundraising-prospectus/')">
                         <div class="app-icon">💸</div>
                         <h3>TAU Fund-Drive</h3>
-                        <p>Fundraising Plans, Targets, Roadmaps, Launch, Ecosystem Integration, Operations</p>
-                        <a href="https://grouptauafrica-spec.github.io/Fundraising-prospectus/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">Fundraising Plans, Targets, Roadmaps, Launch, Ecosystem Integration, Operations</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://magero1985.github.io/Tacep-Proposal-/')">
                         <div class="app-icon">🏫</div>
                         <h3>TACEP School Proposal</h3>
-                        <p>TACEP School Funding Proposal, Partnerships, Investment Opportunities</p>
-                        <a href="https://magero1985.github.io/Tacep-Proposal-/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">TACEP School Funding Proposal, Partnerships, Investment Opportunities</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://grouptauafrica-spec.github.io/Ayuka-Yamo-Healthcare-/')">
                         <div class="app-icon">🌿</div>
                         <h3>Ayuka Yamo Healthcare</h3>
-                        <p>Homeopathic Treatments with Home-based Products, Natural Health Solutions</p>
-                        <a href="https://grouptauafrica-spec.github.io/Ayuka-Yamo-Healthcare-/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">Homeopathic Treatments with Home-based Products, Natural Health Solutions</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, 'https://grouptauafrica-spec.github.io/Tacep-education-App-/')">
                         <div class="app-icon">🎓</div>
                         <h3>TACEP Education App</h3>
-                        <p>One-stop Platform for All Education Needs. Online, Physical, Hybrid Classes, Teacher/Student/Investor Dashboards, Government NITA Testing, Corporate Trainings</p>
-                        <a href="https://grouptauafrica-spec.github.io/Tacep-education-App-/" class="app-link" target="_blank">Launch App →</a>
+                        <p class="app-description">One-stop Platform for All Education Needs. Online, Physical, Hybrid Classes, Teacher/Student/Investor Dashboards, Government NITA Testing, Corporate Trainings</p>
+                        <p class="click-instruction">Click again to open app →</p>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, '')">
                         <div class="app-icon">🌾</div>
                         <h3>Izama Kama App</h3>
-                        <p>Commercial Agriculture & Climate App. Investing in Farming Projects, Food Security, Water Projects and Climate Solutions</p>
+                        <p class="app-description">Commercial Agriculture & Climate App. Investing in Farming Projects, Food Security, Water Projects and Climate Solutions</p>
                         <span class="coming-soon">Coming Soon</span>
-                        <a href="#" class="app-link disabled">Link Pending</a>
                     </div>
 
-                    <div class="app-card">
+                    <div class="app-card" onclick="handleAppClick(event, this, '')">
                         <div class="app-icon">💡</div>
                         <h3>Magero Innovation App</h3>
-                        <p>Commercial & Community Innovation Platform. Knowledge, Skill & Potential Development. Research Activities, Inventions, Patents, Innovative Devices & Ideas. For 1st, 2nd, 3rd degree members with PIIR (Passion for Innovation, Invention & Research)</p>
+                        <p class="app-description">Commercial & Community Innovation Platform. Knowledge, Skill & Potential Development. Research Activities, Inventions, Patents, Innovative Devices & Ideas. For 1st, 2nd, 3rd degree members with PIIR (Passion for Innovation, Invention & Research)</p>
                         <span class="coming-soon">Coming Soon</span>
-                        <a href="#" class="app-link disabled">Link Pending</a>
                     </div>
                 </div>
             </div>
@@ -644,6 +735,34 @@
             }
         }
 
+        let activeCard = null;
+        let clickTimer = null;
+
+        function handleAppClick(event, card, url) {
+            // Close other active cards
+            const allCards = document.querySelectorAll('.app-card');
+            allCards.forEach(c => {
+                if (c !== card) {
+                    c.classList.remove('active');
+                }
+            });
+
+            // If clicking the same card that's already active
+            if (card.classList.contains('active')) {
+                if (url && url !== '') {
+                    // Second click - open the app
+                    window.open(url, '_blank');
+                    card.classList.remove('active');
+                } else {
+                    // Coming soon apps - just close
+                    card.classList.remove('active');
+                }
+            } else {
+                // First click - show description
+                card.classList.add('active');
+            }
+        }
+
         function showCategory(category) {
             // Update modal states
             const modals = document.querySelectorAll('.category-modal');
@@ -653,6 +772,10 @@
             // Show/hide sections
             document.getElementById('systemApps').classList.remove('active');
             document.getElementById('utilityApps').classList.remove('active');
+
+            // Close all active app cards
+            const allCards = document.querySelectorAll('.app-card');
+            allCards.forEach(c => c.classList.remove('active'));
 
             if (category === 'system') {
                 document.getElementById('systemApps').classList.add('active');
@@ -665,6 +788,10 @@
             document.getElementById('dashboard').classList.remove('active');
             document.getElementById('welcomeScreen').style.display = 'block';
             document.getElementById('accessCode').value = '';
+            
+            // Close all active app cards
+            const allCards = document.querySelectorAll('.app-card');
+            allCards.forEach(c => c.classList.remove('active'));
         }
 
         // Allow Enter key to submit access code
