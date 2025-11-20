@@ -29,39 +29,41 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch event - THE CRITICAL FIX
+// Fetch event - LIGHTWEIGHT VERSION
 self.addEventListener('fetch', event => {
   // Only handle GET requests
   if (event.request.method !== 'GET') {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached version if available
-        if (response) {
-          return response;
-        }
+  // Don't intercept external URLs (links to other apps)
+  const url = new URL(event.request.url);
+  if (url.origin !== self.location.origin) {
+    return; // Let external requests go through normally
+  }
 
-        return fetch(event.request)
+  // For local requests, use network first strategy
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        // Cache successful responses
+        if (response && response.status === 200) {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME)
+            .then(cache => {
+              cache.put(event.request, responseToCache);
+            });
+        }
+        return response;
+      })
+      .catch(() => {
+        // If offline, return cached version
+        return caches.match(event.request)
           .then(response => {
-            // Don't cache non-successful responses
-            if (!response || response.status !== 200 || response.type === 'error') {
+            if (response) {
               return response;
             }
-
-            // Cache successful responses
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          })
-          .catch(() => {
-            // If fetch fails, return index.html for navigation requests
+            // For navigation requests, return index.html
             if (event.request.mode === 'navigate') {
               return caches.match('/index.html');
             }
