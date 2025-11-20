@@ -1,7 +1,7 @@
 {
   "name": "TAU Ecosystem",
   "short_name": "TAU",
-  "start_url": "/Tau-Ecosystem-Portal-/",
+  "start_url": "https://magero1985.github.io/Tau-Ecosystem-Portal-/",
   "scope": "/Tau-Ecosystem-Portal-/",
   "display": "standalone",
   "theme_color": "#2d004d",
