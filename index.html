@@ -268,20 +268,41 @@
 
         .app-description {
             display: none;
-            color: rgba(255, 255, 255, 0.9);
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.95);
             line-height: 1.4;
             font-size: 0.75em;
             text-align: center;
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            animation: slideDown 0.3s ease-out;
+            padding: 12px 15px;
+            background: rgba(45, 0, 77, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            min-width: 250px;
+            max-width: 300px;
+            animation: fadeInUp 0.3s ease-out;
         }
 
         .app-card.active .app-description {
             display: block;
+        }
+
+        .app-description::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(255, 215, 0, 0.5);
         }
 
         .click-instruction {
@@ -298,10 +319,6 @@
             animation: pulse 1.5s infinite;
         }
 
-        .app-link {
-            display: none;
-        }
-
         .coming-soon {
             display: block;
             margin-top: 8px;
@@ -312,26 +329,6 @@
             font-size: 0.65em;
             font-weight: bold;
             text-align: center;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .back-btn {
@@ -354,7 +351,6 @@
             transform: translateX(-3px);
         }
 
-        /* Portal Return Button (to be copied to other apps) */
         .portal-return-btn {
             position: fixed;
             bottom: 20px;
@@ -429,6 +425,17 @@
             }
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
         @keyframes slideDown {
             from {
                 opacity: 0;
@@ -437,6 +444,15 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
             }
         }
 
@@ -481,7 +497,6 @@
                 font-size: 0.7em;
             }
 
-            /* CRITICAL: 3 columns on mobile */
             .apps-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
@@ -504,6 +519,7 @@
             .app-description {
                 font-size: 0.7em;
                 padding: 8px;
+                min-width: 200px;
             }
 
             .portal-return-btn {
@@ -620,6 +636,13 @@
                         <h3>Oloo Messenger</h3>
                         <p class="app-description">Messenger Services, Chats, Groups, Forums, and Community Communication Platform</p>
                         <p class="click-instruction">Click again to open app →</p>
+                    </div>
+
+                    <div class="app-card" onclick="handleAppClick(event, this, '')">
+                        <div class="app-icon">🏛️</div>
+                        <h3>Valenta Co Ltd</h3>
+                        <p class="app-description">TAU's economic vehicle for Africa's Sovereign Digital Token building. Registered for legal compliance, members businesses, partners, investors. Sole vehicle for Africa's Sovereignty Card, Kabiru Tokenization and Kabiru Corporate structures</p>
+                        <span class="coming-soon">Coming Soon</span>
                     </div>
                 </div>
             </div>
@@ -817,7 +840,7 @@
         const currentUrl = window.location.href;
         if (!currentUrl.includes('tau-ecosystem-portal')) {
             const returnBtn = document.createElement('a');
-            returnBtn.href = 'https://magero1985.github.io/Tau-Ecosystem-Portal-/';
+            returnBtn.href = 'YOUR_PORTAL_URL_HERE';
             returnBtn.className = 'portal-return-btn';
             returnBtn.innerHTML = '🏠 Return to TAU Portal';
             document.body.appendChild(returnBtn);
