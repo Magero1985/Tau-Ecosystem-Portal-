@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -270,40 +270,41 @@
         .app-description {
             display: none;
             position: absolute;
-            top: -10px;
+            top: -15px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(-100%);
             color: rgba(255, 255, 255, 0.95);
             line-height: 1.4;
             font-size: 0.75em;
             text-align: center;
-            padding: 12px 15px;
-            background: rgba(45, 0, 77, 0.95);
+            padding: 10px 12px;
+            background: rgba(45, 0, 77, 0.98);
             backdrop-filter: blur(10px);
             border-radius: 10px;
-            border: 2px solid rgba(255, 215, 0, 0.5);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            z-index: 100;
-            min-width: 250px;
-            max-width: 300px;
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            width: 180px;
+            max-width: 180px;
             animation: fadeInUp 0.3s ease-out;
+            pointer-events: none;
         }
 
         .app-card.active .app-description {
             display: block;
         }
 
-        .app-description::before {
+        .app-description::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 8px solid rgba(255, 215, 0, 0.5);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid rgba(255, 215, 0, 0.6);
         }
 
         .click-instruction {
@@ -518,9 +519,17 @@
             }
 
             .app-description {
-                font-size: 0.7em;
-                padding: 8px;
-                min-width: 200px;
+                font-size: 0.68em;
+                padding: 8px 10px;
+                width: 160px;
+                max-width: 160px;
+            }
+
+            .app-description::after {
+                bottom: -8px;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid rgba(255, 215, 0, 0.6);
             }
 
             .portal-return-btn {
