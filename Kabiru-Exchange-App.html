@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kabiru Exchange | iKb • iKbp</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple-deep: #1a0030;
+    --purple-royal: #3d0066;
+    --purple-velvet: #5c0099;
+    --purple-mid: #7b00cc;
+    --purple-bright: #9b30ff;
+    --purple-light: #c080ff;
+    --gold: #ffd700;
+    --gold-light: #ffe066;
+    --gold-dim: #b8960a;
+    --silver: #e0d0ff;
+    --white: #fff8ff;
+    --spark1: #ff80ff;
+    --spark2: #80ffff;
+    --spark3: #ffff80;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: var(--purple-deep);
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--white);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ── SPARKLE CANVAS ── */
+  #sparkles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── VELVET BACKGROUND ── */
+  .velvet-bg {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 30%, rgba(92,0,153,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 70%, rgba(61,0,102,0.7) 0%, transparent 55%),
+      radial-gradient(ellipse 100% 100% at 50% 50%, #1a0030 40%, #0d0020 100%);
+    z-index: 0;
+  }
+  .velvet-texture {
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='0.5' fill='rgba(255,255,255,0.02)'/%3E%3C/svg%3E");
+    z-index: 0;
+    opacity: 0.8;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    padding: 40px 0 30px;
+    position: relative;
+  }
+  .logo-ring {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: radial-gradient(circle, rgba(92,0,153,0.9), rgba(26,0,48,0.95));
+    box-shadow: 0 0 30px rgba(255,215,0,0.4), 0 0 80px rgba(155,48,255,0.3), inset 0 0 20px rgba(255,215,0,0.1);
+    margin: 0 auto 20px;
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+  .logo-ring span {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 0 0 15px var(--gold);
+    letter-spacing: -1px;
+  }
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 30px rgba(255,215,0,0.4), 0 0 80px rgba(155,48,255,0.3); }
+    50% { box-shadow: 0 0 50px rgba(255,215,0,0.7), 0 0 120px rgba(155,48,255,0.5); }
+  }
+  h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(26px, 5vw, 46px);
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(255,215,0,0.6), 0 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 3px;
+    line-height: 1.2;
+  }
+  .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--purple-light);
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: linear-gradient(135deg, rgba(92,0,153,0.8), rgba(61,0,102,0.8));
+    border: 1px solid rgba(255,215,0,0.5);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+    backdrop-filter: blur(8px);
+  }
+
+  /* ── RATE CARDS ── */
+  .rates-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .rate-card {
+    background: linear-gradient(135deg, rgba(92,0,153,0.5), rgba(26,0,48,0.8));
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 16px;
+    padding: 18px 20px;
+    backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .rate-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .rate-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--purple-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .rate-symbol {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(255,215,0,0.5);
+  }
+  .rate-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--silver);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .rate-value {
+    font-size: 13px;
+    color: var(--gold-light);
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  /* ── CONVERTER ── */
+  .converter-card {
+    background: linear-gradient(160deg, rgba(92,0,153,0.45), rgba(26,0,48,0.9));
+    border: 1px solid rgba(155,48,255,0.4);
+    border-radius: 20px;
+    padding: 30px 28px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,215,0,0.05);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .converter-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(155,48,255,0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,215,0,0.4), transparent);
+  }
+
+  .input-group {
+    margin-bottom: 18px;
+    position: relative;
+  }
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--purple-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+  }
+  .input-row input, .input-row select {
+    flex: 1;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    background: rgba(26,0,48,0.7);
+    border: 1px solid rgba(155,48,255,0.4);
+    border-radius: 10px;
+    padding: 13px 16px;
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  input[type="number"]:focus, select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(255,215,0,0.15), 0 0 20px rgba(255,215,0,0.1);
+  }
+  input[type="number"]::placeholder { color: rgba(192,128,255,0.4); }
+
+  select option {
+    background: #1a0030;
+    color: var(--white);
+  }
+
+  .currency-select-wrapper {
+    position: relative;
+  }
+  .currency-select-wrapper::after {
+    content: '▾';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    pointer-events: none;
+    font-size: 14px;
+  }
+  .currency-select-wrapper select { padding-right: 36px; }
+
+  /* ── DIRECTION TOGGLE ── */
+  .direction-toggle {
+    display: flex;
+    background: rgba(26,0,48,0.7);
+    border: 1px solid rgba(155,48,255,0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .direction-btn {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    background: transparent;
+    color: var(--purple-light);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+  .direction-btn.active {
+    background: linear-gradient(135deg, var(--purple-velvet), var(--purple-royal));
+    color: var(--gold);
+    box-shadow: inset 0 1px 0 rgba(255,215,0,0.2);
+  }
+
+  /* ── UNIT TOGGLE ── */
+  .unit-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .unit-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid rgba(155,48,255,0.4);
+    border-radius: 10px;
+    background: rgba(26,0,48,0.5);
+    color: var(--purple-light);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+  }
+  .unit-btn.active {
+    background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(155,48,255,0.3));
+    border-color: var(--gold);
+    color: var(--gold);
+    box-shadow: 0 0 15px rgba(255,215,0,0.2);
+  }
+
+  /* ── CONVERT BUTTON ── */
+  .convert-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--purple-velvet) 0%, var(--purple-mid) 50%, var(--purple-bright) 100%);
+    border: 1px solid rgba(255,215,0,0.4);
+    border-radius: 12px;
+    color: var(--gold);
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(92,0,153,0.5), 0 0 0 1px rgba(255,215,0,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  .convert-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+  .convert-btn:hover::before { transform: translateX(100%); }
+  .convert-btn:hover {
+    box-shadow: 0 8px 30px rgba(92,0,153,0.7), 0 0 20px rgba(255,215,0,0.3);
+    transform: translateY(-1px);
+  }
+  .convert-btn:active { transform: translateY(0); }
+
+  /* ── RESULT ── */
+  .result-box {
+    margin-top: 20px;
+    background: linear-gradient(135deg, rgba(26,0,48,0.9), rgba(61,0,102,0.5));
+    border: 1px solid rgba(255,215,0,0.5);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  .result-box.show { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .result-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .result-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--purple-light);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .result-amount {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(255,215,0,0.5);
+    line-height: 1.2;
+    word-break: break-all;
+  }
+  .result-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--silver);
+    margin-top: 8px;
+  }
+  .result-formula {
+    font-size: 12px;
+    color: rgba(192,128,255,0.6);
+    margin-top: 10px;
+    letter-spacing: 1px;
+  }
+
+  /* ── QUICK REFERENCE TABLE ── */
+  .ref-card {
+    background: linear-gradient(160deg, rgba(61,0,102,0.5), rgba(26,0,48,0.8));
+    border: 1px solid rgba(155,48,255,0.3);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(12px);
+  }
+  .currency-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .currency-table thead tr {
+    border-bottom: 1px solid rgba(255,215,0,0.3);
+  }
+  .currency-table th {
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .currency-table tbody tr {
+    border-bottom: 1px solid rgba(155,48,255,0.1);
+    transition: background 0.2s;
+  }
+  .currency-table tbody tr:hover {
+    background: rgba(92,0,153,0.2);
+  }
+  .currency-table td {
+    padding: 9px 10px;
+    color: var(--silver);
+    vertical-align: middle;
+  }
+  .currency-table td:first-child { color: var(--white); font-weight: 600; }
+  .currency-table .flag { font-size: 18px; margin-right: 6px; }
+  .region-header td {
+    background: rgba(92,0,153,0.25);
+    color: var(--gold-light);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 7px 10px;
+    font-weight: 700;
+  }
+  .ikb-val { color: var(--gold); font-weight: 700; font-family: 'Rajdhani'; }
+  .ikbp-val { color: var(--spark2); font-weight: 600; font-family: 'Rajdhani'; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 30px 0;
+    border-top: 1px solid rgba(155,48,255,0.2);
+    margin-top: 20px;
+  }
+  footer p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: rgba(192,128,255,0.5);
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  .footer-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 18px;
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(255,215,0,0.3);
+    margin-bottom: 8px;
+  }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px;
+    background: rgba(26,0,48,0.6);
+    border: 1px solid rgba(155,48,255,0.3);
+    border-radius: 10px;
+    color: var(--purple-light);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, rgba(92,0,153,0.7), rgba(61,0,102,0.7));
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 540px) {
+    .rates-strip { grid-template-columns: 1fr; }
+    .converter-card, .ref-card { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="sparkles"></canvas>
+<div class="velvet-bg"></div>
+<div class="velvet-texture"></div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-ring"><span>iKb</span></div>
+    <h1>KABIRU EXCHANGE</h1>
+    <p class="tagline">The Official Kabiru Ecosystem Currency Platform</p>
+    <div class="badge-row">
+      <span class="badge">✦ iKb Stable Value</span>
+      <span class="badge">✦ iKbp Points</span>
+      <span class="badge">✦ Pan-African Coverage</span>
+    </div>
+  </header>
+
+  <!-- GCV RATE CARDS -->
+  <div class="rates-strip">
+    <div class="rate-card">
+      <div class="rate-label">Kabiru · GCV Rate</div>
+      <div class="rate-symbol">1 iKb</div>
+      <div class="rate-desc">Equals 100,000 Base Units of any national currency</div>
+      <div class="rate-value">= Ksh 100,000 (default)</div>
+    </div>
+    <div class="rate-card">
+      <div class="rate-label">Kabiru Point · GCV Rate</div>
+      <div class="rate-symbol">10 iKbp</div>
+      <div class="rate-desc">Equals 10 Base Units of any national currency</div>
+      <div class="rate-value">1 iKbp = 1 Ksh (default)</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('converter')">💱 Converter</button>
+    <button class="tab-btn" onclick="switchTab('reference')">📋 Rates Table</button>
+  </div>
+
+  <!-- CONVERTER TAB -->
+  <div class="tab-pane active" id="tab-converter">
+    <div class="converter-card">
+      <div class="section-title">✦ Currency Converter</div>
+
+      <!-- Kabiru Unit -->
+      <div class="input-group">
+        <label>Kabiru Unit</label>
+        <div class="unit-toggle">
+          <button class="unit-btn active" id="btn-ikb" onclick="selectUnit('ikb')">iKb — Kabiru</button>
+          <button class="unit-btn" id="btn-ikbp" onclick="selectUnit('ikbp')">iKbp — Points</button>
+        </div>
+      </div>
+
+      <!-- Direction -->
+      <div class="input-group">
+        <label>Conversion Direction</label>
+        <div class="direction-toggle">
+          <button class="direction-btn active" id="dir-to" onclick="setDirection('to')">Kabiru → Currency</button>
+          <button class="direction-btn" id="dir-from" onclick="setDirection('from')">Currency → Kabiru</button>
+        </div>
+      </div>
+
+      <!-- Amount -->
+      <div class="input-group">
+        <label id="amount-label">Amount (in iKb)</label>
+        <input type="number" id="amount-input" placeholder="Enter amount..." min="0" step="0.001">
+      </div>
+
+      <!-- Currency -->
+      <div class="input-group">
+        <label>Select African Currency</label>
+        <div class="currency-select-wrapper">
+          <select id="currency-select"></select>
+        </div>
+      </div>
+
+      <button class="convert-btn" onclick="convert()">✦ CONVERT NOW ✦</button>
+
+      <div class="result-box" id="result-box">
+        <div class="result-label" id="result-label">Converted Value</div>
+        <div class="result-amount" id="result-amount">—</div>
+        <div class="result-sub" id="result-sub"></div>
+        <div class="result-formula" id="result-formula"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERENCE TABLE TAB -->
+  <div class="tab-pane" id="tab-reference">
+    <div class="ref-card">
+      <div class="section-title">✦ Kabiru Rates — All African Currencies</div>
+      <table class="currency-table" id="rates-table">
+        <thead>
+          <tr>
+            <th>Currency</th>
+            <th>Code</th>
+            <th class="ikb-val">1 iKb =</th>
+            <th class="ikbp-val">1 iKbp =</th>
+          </tr>
+        </thead>
+        <tbody id="rates-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">✦ KABIRU ✦</div>
+    <p>Powering the Kabiru Ecosystem — Stable. Trusted. Pan-African.</p>
+    <p style="margin-top:6px;font-size:12px;">GCV: 1 iKb = 100,000 Base Units &nbsp;|&nbsp; 10 iKbp = 10 Base Units</p>
+  </footer>
+
+</div>
+
+<script>
+// ── CURRENCIES ──
+const currencies = [
+  // East Africa
+  { region: 'East Africa', name: 'Kenyan Shilling', code: 'KES', flag: '🇰🇪', default: true },
+  { region: 'East Africa', name: 'Ugandan Shilling', code: 'UGX', flag: '🇺🇬' },
+  { region: 'East Africa', name: 'Tanzanian Shilling', code: 'TZS', flag: '🇹🇿' },
+  { region: 'East Africa', name: 'Rwandan Franc', code: 'RWF', flag: '🇷🇼' },
+  { region: 'East Africa', name: 'Burundian Franc', code: 'BIF', flag: '🇧🇮' },
+  { region: 'East Africa', name: 'Ethiopian Birr', code: 'ETB', flag: '🇪🇹' },
+  { region: 'East Africa', name: 'Somali Shilling', code: 'SOS', flag: '🇸🇴' },
+  { region: 'East Africa', name: 'Djiboutian Franc', code: 'DJF', flag: '🇩🇯' },
+  { region: 'East Africa', name: 'Eritrean Nakfa', code: 'ERN', flag: '🇪🇷' },
+  { region: 'East Africa', name: 'South Sudanese Pound', code: 'SSP', flag: '🇸🇸' },
+  // Southern Africa
+  { region: 'Southern Africa', name: 'South African Rand', code: 'ZAR', flag: '🇿🇦' },
+  { region: 'Southern Africa', name: 'Zimbabwean Dollar', code: 'ZWL', flag: '🇿🇼' },
+  { region: 'Southern Africa', name: 'Zambian Kwacha', code: 'ZMW', flag: '🇿🇲' },
+  { region: 'Southern Africa', name: 'Malawian Kwacha', code: 'MWK', flag: '🇲🇼' },
+  { region: 'Southern Africa', name: 'Mozambican Metical', code: 'MZN', flag: '🇲🇿' },
+  { region: 'Southern Africa', name: 'Botswana Pula', code: 'BWP', flag: '🇧🇼' },
+  { region: 'Southern Africa', name: 'Namibian Dollar', code: 'NAD', flag: '🇳🇦' },
+  { region: 'Southern Africa', name: 'Lesotho Loti', code: 'LSL', flag: '🇱🇸' },
+  { region: 'Southern Africa', name: 'Swazi Lilangeni', code: 'SZL', flag: '🇸🇿' },
+  { region: 'Southern Africa', name: 'Angolan Kwanza', code: 'AOA', flag: '🇦🇴' },
+  { region: 'Southern Africa', name: 'Malagasy Ariary', code: 'MGA', flag: '🇲🇬' },
+  { region: 'Southern Africa', name: 'Mauritian Rupee', code: 'MUR', flag: '🇲🇺' },
+  { region: 'Southern Africa', name: 'Seychellois Rupee', code: 'SCR', flag: '🇸🇨' },
+  { region: 'Southern Africa', name: 'Comorian Franc', code: 'KMF', flag: '🇰🇲' },
+  // West Africa
+  { region: 'West Africa', name: 'Nigerian Naira', code: 'NGN', flag: '🇳🇬' },
+  { region: 'West Africa', name: 'Ghanaian Cedi', code: 'GHS', flag: '🇬🇭' },
+  { region: 'West Africa', name: 'CFA Franc BCEAO', code: 'XOF', flag: '🌍' },
+  { region: 'West Africa', name: 'Sierra Leonean Leone', code: 'SLL', flag: '🇸🇱' },
+  { region: 'West Africa', name: 'Liberian Dollar', code: 'LRD', flag: '🇱🇷' },
+  { region: 'West Africa', name: 'Gambian Dalasi', code: 'GMD', flag: '🇬🇲' },
+  { region: 'West Africa', name: 'Guinean Franc', code: 'GNF', flag: '🇬🇳' },
+  { region: 'West Africa', name: 'Guinea-Bissau Franc', code: 'GWP', flag: '🇬🇼' },
+  { region: 'West Africa', name: 'Cabo Verde Escudo', code: 'CVE', flag: '🇨🇻' },
+  { region: 'West Africa', name: 'Mauritanian Ouguiya', code: 'MRU', flag: '🇲🇷' },
+  // Central/Other Africa in West list
+  { region: 'West Africa', name: 'CFA Franc BEAC', code: 'XAF', flag: '🌍' },
+];
+
+let activeUnit = 'ikb';
+let activeDirection = 'to';
+
+// ── Build select ──
+function buildSelect() {
+  const sel = document.getElementById('currency-select');
+  let lastRegion = '';
+  currencies.forEach(c => {
+    if (c.region !== lastRegion) {
+      const og = document.createElement('optgroup');
+      og.label = `── ${c.region} ──`;
+      sel.appendChild(og);
+      lastRegion = c.region;
+    }
+    const opt = document.createElement('option');
+    opt.value = c.code;
+    opt.textContent = `${c.flag}  ${c.name} (${c.code})`;
+    if (c.default) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+// ── Build reference table ──
+function buildTable() {
+  const tbody = document.getElementById('rates-tbody');
+  let lastRegion = '';
+  currencies.forEach(c => {
+    if (c.region !== lastRegion) {
+      const rr = document.createElement('tr');
+      rr.className = 'region-header';
+      rr.innerHTML = `<td colspan="4">⬥ ${c.region}</td>`;
+      tbody.appendChild(rr);
+      lastRegion = c.region;
+    }
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="flag">${c.flag}</span>${c.name}</td>
+      <td><strong>${c.code}</strong></td>
+      <td class="ikb-val">100,000 ${c.code}</td>
+      <td class="ikbp-val">1 ${c.code}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function selectUnit(u) {
+  activeUnit = u;
+  document.getElementById('btn-ikb').classList.toggle('active', u==='ikb');
+  document.getElementById('btn-ikbp').classList.toggle('active', u==='ikbp');
+  updateAmountLabel();
+  hideResult();
+}
+
+function setDirection(d) {
+  activeDirection = d;
+  document.getElementById('dir-to').classList.toggle('active', d==='to');
+  document.getElementById('dir-from').classList.toggle('active', d==='from');
+  updateAmountLabel();
+  hideResult();
+}
+
+function updateAmountLabel() {
+  const sel = document.getElementById('currency-select');
+  const code = sel ? sel.value : 'KES';
+  const lbl = document.getElementById('amount-label');
+  if (activeDirection === 'to') {
+    lbl.textContent = `Amount (in ${activeUnit === 'ikb' ? 'iKb' : 'iKbp'})`;
+    document.getElementById('amount-input').placeholder = `Enter ${activeUnit === 'ikb' ? 'iKb' : 'iKbp'} amount...`;
+  } else {
+    lbl.textContent = `Amount (in ${code})`;
+    document.getElementById('amount-input').placeholder = `Enter ${code} amount...`;
+  }
+}
+
+function hideResult() {
+  document.getElementById('result-box').classList.remove('show');
+}
+
+function convert() {
+  const amountRaw = parseFloat(document.getElementById('amount-input').value);
+  if (isNaN(amountRaw) || amountRaw < 0) {
+    alert('Please enter a valid amount.');
+    return;
+  }
+  const code = document.getElementById('currency-select').value;
+  const cObj = currencies.find(c => c.code === code) || { name: code, code, flag: '🌍' };
+
+  let result, label, sub, formula;
+
+  // iKb: 1 iKb = 100,000 base units
+  // iKbp: 10 iKbp = 10 base units => 1 iKbp = 1 base unit
+  if (activeUnit === 'ikb') {
+    if (activeDirection === 'to') {
+      // iKb → Currency
+      result = amountRaw * 100000;
+      label = `${amountRaw.toLocaleString()} iKb =`;
+      sub = `${result.toLocaleString(undefined,{maximumFractionDigits:2})} ${code}`;
+      formula = `Formula: ${amountRaw} iKb × 100,000 = ${result.toLocaleString()} ${code}`;
+      document.getElementById('result-amount').textContent = `${cObj.flag} ${result.toLocaleString(undefined,{maximumFractionDigits:2})} ${code}`;
+    } else {
+      // Currency → iKb
+      result = amountRaw / 100000;
+      label = `${amountRaw.toLocaleString()} ${code} =`;
+      sub = `${result.toLocaleString(undefined,{maximumFractionDigits:8})} iKb`;
+      formula = `Formula: ${amountRaw} ${code} ÷ 100,000 = ${result.toLocaleString(undefined,{maximumFractionDigits:8})} iKb`;
+      document.getElementById('result-amount').textContent = `✦ ${result.toLocaleString(undefined,{maximumFractionDigits:8})} iKb`;
+    }
+  } else {
+    // iKbp: 1 iKbp = 1 base unit
+    if (activeDirection === 'to') {
+      result = amountRaw * 1; // 1 iKbp = 1 unit
+      label = `${amountRaw.toLocaleString()} iKbp =`;
+      sub = `${result.toLocaleString(undefined,{maximumFractionDigits:2})} ${code}`;
+      formula = `Formula: ${amountRaw} iKbp × 1 = ${result.toLocaleString()} ${code}  (10 iKbp = 10 ${code})`;
+      document.getElementById('result-amount').textContent = `${cObj.flag} ${result.toLocaleString(undefined,{maximumFractionDigits:2})} ${code}`;
+    } else {
+      result = amountRaw / 1;
+      label = `${amountRaw.toLocaleString()} ${code} =`;
+      sub = `${result.toLocaleString(undefined,{maximumFractionDigits:4})} iKbp`;
+      formula = `Formula: ${amountRaw} ${code} ÷ 1 = ${result.toLocaleString()} iKbp  (10 ${code} = 10 iKbp)`;
+      document.getElementById('result-amount').textContent = `◈ ${result.toLocaleString(undefined,{maximumFractionDigits:4})} iKbp`;
+    }
+  }
+
+  document.getElementById('result-label').textContent = label;
+  document.getElementById('result-sub').textContent = sub;
+  document.getElementById('result-formula').textContent = formula;
+  document.getElementById('result-box').classList.add('show');
+}
+
+function switchTab(t) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    if ((i === 0 && t === 'converter') || (i === 1 && t === 'reference')) b.classList.add('active');
+  });
+}
+
+document.getElementById('currency-select') && document.getElementById('currency-select').addEventListener('change', updateAmountLabel);
+
+// ── SPARKLES ──
+(function() {
+  const canvas = document.getElementById('sparkles');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const COLORS = ['#ffd700','#ff80ff','#c080ff','#80ffff','#ffffff','#ffe066'];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function createStars(n) {
+    stars = [];
+    for (let i = 0; i < n; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.3,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        alpha: Math.random(),
+        speed: Math.random() * 0.008 + 0.003,
+        phase: Math.random() * Math.PI * 2,
+        twinkle: Math.random() * 0.03 + 0.005,
+        drift: (Math.random() - 0.5) * 0.15,
+        driftY: (Math.random() - 0.5) * 0.05,
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const t = Date.now() * 0.001;
+    stars.forEach(s => {
+      s.alpha = 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t * s.speed * 60 + s.phase));
+      s.x += s.drift;
+      s.y += s.driftY;
+      if (s.x > canvas.width + 5) s.x = -5;
+      if (s.x < -5) s.x = canvas.width + 5;
+      if (s.y > canvas.height + 5) s.y = -5;
+      if (s.y < -5) s.y = canvas.height + 5;
+
+      ctx.save();
+      ctx.globalAlpha = s.alpha;
+      ctx.fillStyle = s.color;
+      ctx.shadowColor = s.color;
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); createStars(220); });
+  resize();
+  createStars(220);
+  draw();
+})();
+
+// ── INIT ──
+buildSelect();
+buildTable();
+updateAmountLabel();
+</script>
+</body>
+</html>
